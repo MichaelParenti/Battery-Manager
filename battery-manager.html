@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Manager</title>
+    <style>
+        body{
+            background: rgb(70, 0, 70);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow:hidden;
+            z-index: -2;
+        }
+        #out {
+            border: 5px solid black;
+            padding: 5px;
+            border-radius: 10px;
+            width: 200px;
+            height: 100px;
+        }
+        #out::after{
+            content: "''";
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            margin: -60px 215px;
+            background: black;
+            z-index: 1000;
+        }
+        #in{
+            width: 100%;
+            border-radius: 5px;
+            height: 100%;
+            background: linear-gradient(rgb(0, 191, 255), lime);
+        }
+        h1{
+            font-family: Arial Black, Helvetica, sans-serif;
+            font-size: 48px;
+        }
+        #container{
+            position: absolute;
+            background: rgba(192,192,192,0.5);
+            backdrop-filter: blur(10px);
+            width: 400px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 99999999999999;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+        }
+        #elem::before{
+            content: "";
+            position: absolute;
+            width:200px;
+            height:200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-300px, -350px);
+            background: linear-gradient(to right, blue, lime);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        #elem::after{
+            content: "";
+            position: absolute;
+            width:200px;
+            height:200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(100px, 120px);
+            background: linear-gradient(to left, blue, lime);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        #elem{
+            background: rgba(192,192,192,0.0);
+            width: 400px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="elem"></div>
+    <div id="container">
+        <div id="out">
+            <div id="in"></div>
+        </div>
+        <h1>100%</h1>
+    </div>
+    
+
+
+    <script type="text/javascript" defer>
+    let color = document.getElementById("in");
+    let h1 = document.querySelector("h1");
+
+    setInterval(updateBattery, 1);
+
+    function updateBattery(){
+        navigator.getBattery().then(function(battery){
+            color.style.width = battery.level * 100 + "%";
+            h1.innerHTML = battery.level * 100 + "%";
+        });
+    }
+    
+    </script>
+</body>
+</html>
